@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -27,14 +28,29 @@ namespace JwtDemo.Controllers
             this.configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] UserModel model)
+        public async Task<IActionResult> Login([FromBody] UserModel user)
         {
-            var claims = new[]
+            //查询用户,
+            if (user.Username.IsNullOrEmpty() || user.Password.IsNullOrEmpty())
             {
-                new Claim(ClaimTypes.Name, model.Username!),
-                new Claim(ClaimTypes.Role, "Admin")
-            };
+                return BadRequest("用户名或密码错误");
+            }
+            
+            //验证密码，使用HASH
+            if (user.Password != "123456")
+            {
+                return BadRequest("用户名或密码错误");
+            }
+
+          
+
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, user.Username!));
+            claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+            claims.Add(new Claim(ClaimTypes.Role, "User"));
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtConfig:Secret"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
@@ -46,9 +62,12 @@ namespace JwtDemo.Controllers
             );
             return Ok(new
             {
+                Id = user.Username,
+                Roles= new[] { "Admin" },
                 token = new JwtSecurityTokenHandler().WriteToken(token)
             });
-
         }
+
+       
     }
 }

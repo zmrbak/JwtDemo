@@ -1,8 +1,6 @@
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JwtDemo.Controllers
+namespace Jwt2.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -20,14 +18,9 @@ namespace JwtDemo.Controllers
             _logger = logger;
         }
 
-        //[Authorize("Admin")]
-        //[ApiExplorerSettings(GroupName ="client")]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            var userName=User.FindFirst(ClaimTypes.Name)?.Value;
-            Console.WriteLine(userName);
-
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

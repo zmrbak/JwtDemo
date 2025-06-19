@@ -19,7 +19,13 @@ namespace JwtDemo
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                options.SaveToken = true;
+                var sign = builder.Configuration["JwtConfig:Secret"]!;
+                if(sign.IsNullOrEmpty())
+                {
+                    throw new Exception("ÇëÅäÖÃJwtConfig");
+                }
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
@@ -27,10 +33,15 @@ namespace JwtDemo
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
                     ValidAudience = builder.Configuration["JwtConfig:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Secret"]!))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(sign))
                 };
             });
+            builder.Services.AddAuthorizationBuilder()
+                .AddPolicy("Admin", policy => policy.RequireClaim("Admin"))
+                .AddPolicy("User", policy => policy.RequireClaim("User"))
+                ;
 
+               
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
