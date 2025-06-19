@@ -40,7 +40,6 @@ namespace JwtDemo
                 .AddPolicy("Admin", policy => policy.RequireClaim("Admin"))
                 .AddPolicy("User", policy => policy.RequireClaim("User"))
                 ;
-
                
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtDemo", "JwtDemo\JwtDemo.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jwt2", "Jwt2\Jwt2.csproj", "{C4199C48-29AF-40E4-B93C-EC276BB90ED0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jwt3", "Jwt3\Jwt3.csproj", "{98324957-88BB-4F75-A41F-D431B5635352}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C4199C48-29AF-40E4-B93C-EC276BB90ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4199C48-29AF-40E4-B93C-EC276BB90ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4199C48-29AF-40E4-B93C-EC276BB90ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98324957-88BB-4F75-A41F-D431B5635352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98324957-88BB-4F75-A41F-D431B5635352}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98324957-88BB-4F75-A41F-D431B5635352}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98324957-88BB-4F75-A41F-D431B5635352}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
